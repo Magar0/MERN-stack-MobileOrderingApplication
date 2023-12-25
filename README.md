@@ -3,12 +3,14 @@
 Libraries Used:
 
 <p align="center">
+
 ![mongoDB](https://github.com/Magar0/MERN-stack-MobileOrderingApplication/assets/35245789/e5846ce6-f9d8-45a5-9cc8-ccccc714f016)
 ![Express js](https://github.com/Magar0/MERN-stack-MobileOrderingApplication/assets/35245789/48945278-5a98-4e43-ae44-d17d02086e25)
 ![Node Js](https://github.com/Magar0/MERN-stack-MobileOrderingApplication/assets/35245789/d9794fa0-1e3e-4475-949b-559dcef8df49)
 ![React](https://github.com/Magar0/MERN-stack-MobileOrderingApplication/assets/35245789/2d4d8860-04dc-4e64-8e7a-b568f64c497c)
 ![redux](https://github.com/Magar0/MERN-stack-MobileOrderingApplication/assets/35245789/746af828-0be7-4683-a6af-f8448fa10ccc)
 <img src="https://github.com/Magar0/MERN-stack-MobileOrderingApplication/assets/35245789/3158ad80-868d-4528-8ddc-a2e0cf735603" title="react-icon" width="100" height="100">
+
 </p>
 
 # FrontEnd:
