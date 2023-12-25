@@ -18,11 +18,12 @@ const Card = ({ mobile }) => {
 
 const Image = styled.div`
     height: 300px;
+    width: 250px;
     padding: 10px;
     img{
         width:100%;
         height: 100%;
-        max-height: 350px;
+        /* max-height: 350px; */
     }
 
     @media screen and (max-width:1120px) {

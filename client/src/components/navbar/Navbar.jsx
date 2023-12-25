@@ -57,13 +57,13 @@ const Wrapper = styled.section`
     a{
         text-decoration: none;
     }
-
+    
     h1{
         color: black;
         letter-spacing: 0.2rem;
         word-spacing: 0.5rem;
     }
-
+    
     .nav-links{
         justify-content: space-evenly;
         width: 70%;
@@ -73,6 +73,7 @@ const Wrapper = styled.section`
         border-radius: 15px;
         color: #000000b1;
         transition: 0.2s;
+        min-width: 120px;
     }
     .nav-links a:hover,
     .nav-links .active{

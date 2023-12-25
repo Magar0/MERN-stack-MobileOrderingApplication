@@ -11,9 +11,9 @@ const Search = () => {
 
     const handleSearch = async () => {
         try {
-            const res = await fetch(`http://localhost:3000/api/mobiles/search?name=${search}`);
+            // const res = await fetch(`http://localhost:3000/api/mobiles/search?name=${search}`);
+            const res = await fetch(`https://mobile-ordering.vercel.app/api/mobiles/${search ? "search?name=" + search : ""}`);
             const data = await res.json();
-            // console.log(data);
             dispatch(fetchMobileSuccess(data))
         } catch (err) {
             console.log(err);
@@ -24,7 +24,7 @@ const Search = () => {
     return (
         <Wrapper>
             <i onClick={handleSearch}><FaSearch /></i>
-            <input type="text" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
+            <input type="text" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={(e) => e.key === "Enter" ? handleSearch() : null} />
         </Wrapper>
     )
 }

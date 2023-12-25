@@ -13,7 +13,8 @@ const HomeBar = () => {
     // console.log(mobiles);
 
     const getData = async () => {
-        fetch('http://localhost:3000/api/mobiles').then((res) => res.json())
+        // fetch('http://localhost:3000/api/mobiles').then((res) => res.json())
+        fetch('https://mobile-ordering.vercel.app/api/mobiles').then((res) => res.json())
             .then((data) => dispatch(fetchMobileSuccess(data)))
             .catch(err => dispatch(fetchMobileFailure("true")))
     }

@@ -62,7 +62,8 @@ const LeftSidebar = () => {
             memory: "",
             os: ""
         })
-        fetch('http://localhost:3000/api/mobiles').then((res) => res.json())
+        // fetch('http://localhost:3000/api/mobiles').then((res) => res.json())
+        fetch('https://mobile-ordering.vercel.app/api/mobiles').then((res) => res.json())
             .then((data) => dispatch(fetchMobileSuccess(data)))
             .catch(err => dispatch(fetchMobileFailure("true")))
     }
@@ -80,7 +81,8 @@ const LeftSidebar = () => {
         }
 
         try {
-            const res = await axios.get('http://localhost:3000/api/mobiles/search', { params: filter })
+            // const res = await axios.get('http://localhost:3000/api/mobiles/search', { params: filter })
+            const res = await axios.get('https://mobile-ordering.vercel.app/api/mobiles/search', { params: filter })
             const data = await res.data;
             dispatch(fetchMobileSuccess(data))
         } catch (err) {
@@ -245,6 +247,9 @@ const Wrapper = styled.section`
         text-align: center;
         text-transform: capitalize;
         border: solid 1px #0000003e;
+        option{
+            margin-top: 5px;
+        }
     }
             
 `
