@@ -12,7 +12,8 @@ const Search = () => {
 
     const handleSearch = async () => {
         try {
-            const res = await fetch(`http://localhost:3000/api/mobiles?${search ? "name=" + search + "&" : ""}limit=6`);
+            // const res = await fetch(`http://localhost:3000/api/mobiles?${search ? "name=" + search + "&" : ""}limit=6`);
+            const res = await fetch(`https://mobile-ordering.vercel.app/api/mobiles?${search ? "name=" + search + "&" : ""}limit=6`);
             const data = await res.json();
 
             dispatch(fetchMobileSuccess(data.mobiles))

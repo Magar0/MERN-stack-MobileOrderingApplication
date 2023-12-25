@@ -15,7 +15,8 @@ const LeftSidebar = () => {
 
     const getData = async () => {
         try {
-            const res = await axios.get('http://localhost:3000/api/mobiles/', { params: { ...filter, limit: 6 } });
+            // const res = await axios.get('http://localhost:3000/api/mobiles/', { params: { ...filter, limit: 6 } });
+            const res = await axios.get('https://mobile-ordering.vercel.app/api/mobiles/', { params: { ...filter, limit: 6 } });
             const data = await res.data;
 
             dispatch(fetchMobileSuccess(data.mobiles))
