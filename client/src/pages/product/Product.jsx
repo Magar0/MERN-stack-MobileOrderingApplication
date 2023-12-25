@@ -13,7 +13,7 @@ const Product = () => {
     console.log(data);
 
     useEffect(() => {
-        fetch(`http://localhost:3000/api/mobiles/${id}`).then((res) => res.json())
+        fetch(`https://mobile-ordering.vercel.app/api/mobiles/${id}`).then((res) => res.json())
             .then((data) => setData(data)).catch(err => console.error(err))
     }, [])
     return (
