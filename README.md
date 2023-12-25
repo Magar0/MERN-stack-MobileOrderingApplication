@@ -22,6 +22,7 @@ Libraries Used:
 5. Loading CSS, errror ane handle by using Redux Global State.
 6. React-router-dom is used to route between pages.
 7. Dynamic route is used to show product details for each item.
+8. Infinite Scrolling is used.
 
 ---
 
@@ -30,3 +31,4 @@ Libraries Used:
 1.Node js and Express js is used to create REST Api.
 2.Different endpoints are made for CRUD operation
 3.Mongo Db is used for storing and retrieving data.
+4.Skip & limit is used in api for infinite scrolling

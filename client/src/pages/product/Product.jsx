@@ -9,7 +9,6 @@ const Product = () => {
     const [data, setData] = useState("")
     const params = useParams()
     const { id } = params
-    console.log(id);
     console.log(data);
 
     useEffect(() => {
@@ -18,7 +17,7 @@ const Product = () => {
     }, [])
     return (
         <>
-            {!data || data.message ? <Error /> : null}
+            {(data.message == "Mobile not found") ? <Error /> : null}
             {data && <ProductPage mobile={data} />}
         </>
     )

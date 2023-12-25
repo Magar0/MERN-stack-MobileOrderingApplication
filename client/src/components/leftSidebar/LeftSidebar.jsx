@@ -1,22 +1,31 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import axios from 'axios'
-import { fetchMobileFailure, fetchMobileStarted, fetchMobileSuccess } from '../../store/slices/mobileSlices'
+import { fetchMobileFailure, fetchMobileSuccess, setPageNo, setTotalItems, setFilter } from '../../store/slices/mobileSlices'
+
+
 
 const LeftSidebar = () => {
 
     const dispatch = useDispatch()
     const [isFilterEmpty, setIsFilterEmpty] = useState(false)
-    const [filter, setFilter] = useState({
-        name: "",
-        brand: "",
-        price: ["", ""],
-        type: "",
-        processor: "",
-        memory: "",
-        os: ""
-    })
+    const { filter } = useSelector(state => state.mobile)
+    // console.log(pageNo, totalItems);
+
+    const getData = async () => {
+        try {
+            const res = await axios.get('http://localhost:3000/api/mobiles/', { params: { ...filter, limit: 6 } });
+            const data = await res.data;
+
+            dispatch(fetchMobileSuccess(data.mobiles))
+            dispatch(setTotalItems(data.totalItems));
+            dispatch(setPageNo(1))
+        } catch (err) {
+            console.error(err);
+            dispatch(fetchMobileFailure(true))
+        }
+    }
 
 
     const isEmpty = () => {
@@ -33,27 +42,24 @@ const LeftSidebar = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFilter(pre => ({
-            ...pre, [name]: value
-        }))
+        dispatch(setFilter({ ...filter, [name]: value }))
     }
 
 
     const handlePriceChange = (e) => {
         const { name, value } = e.target;
-
-        setFilter(pre => ({
-            ...pre,
+        dispatch(setFilter({
+            ...filter,
             price: [
-                name === "minPrice" ? value : pre.price[0],
-                name === "maxPrice" ? value : pre.price[1],
+                name === "minPrice" ? value : filter.price[0],
+                name === "maxPrice" ? value : filter.price[1],
             ]
         }))
     }
 
 
     const clearAll = async () => {
-        setFilter({
+        dispatch(setFilter({
             name: "",
             brand: "",
             price: ["", ""],
@@ -61,13 +67,9 @@ const LeftSidebar = () => {
             processor: "",
             memory: "",
             os: ""
-        })
-        // fetch('http://localhost:3000/api/mobiles').then((res) => res.json())
-        fetch('https://mobile-ordering.vercel.app/api/mobiles').then((res) => res.json())
-            .then((data) => dispatch(fetchMobileSuccess(data)))
-            .catch(err => dispatch(fetchMobileFailure("true")))
+        }))
+        getData();
     }
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -79,16 +81,10 @@ const LeftSidebar = () => {
             }, 2000)
             return;
         }
-
-        try {
-            // const res = await axios.get('http://localhost:3000/api/mobiles/search', { params: filter })
-            const res = await axios.get('https://mobile-ordering.vercel.app/api/mobiles/search', { params: filter })
-            const data = await res.data;
-            dispatch(fetchMobileSuccess(data))
-        } catch (err) {
-            dispatch(fetchMobileFailure("true"))
-        }
+        getData();
     }
+
+
 
     return (
         <Wrapper>
@@ -160,6 +156,7 @@ const LeftSidebar = () => {
         </Wrapper>
 
     )
+
 }
 
 
@@ -254,4 +251,4 @@ const Wrapper = styled.section`
             
 `
 
-export default LeftSidebar
+export default LeftSidebar;

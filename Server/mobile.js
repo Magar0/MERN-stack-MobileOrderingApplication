@@ -5,24 +5,23 @@ const Mobile = require("./mongoose/schema");
 const router = express.Router();
 
 //Get all data
+// router.get('/', async (req, res) => {
+//     try {
+//         await dbConnect();
+//         const mobiles = await Mobile.find();
+//         res.status(200).json(mobiles)
+//     } catch (err) {
+//         console.log(err);
+//         res.status(500).json({ message: "Error fetching details" })
+//     }
+// })
+
+
+
+//get filter data using limit skip
 router.get('/', async (req, res) => {
     try {
-        await dbConnect();
-        const mobiles = await Mobile.find();
-        res.status(200).json(mobiles)
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ message: "Error fetching details" })
-    }
-})
-
-
-
-//Get mobiles by filters
-router.get('/search', async (req, res) => {
-    try {
-        const { price = ["", ""], name, brand, type, processor, memory, os } = req.query;
-        console.log(price);
+        const { price = ["", ""], name, brand, type, processor, memory, os, limit, skip } = req.query;
         const query = {};
 
         if (name) {
@@ -50,15 +49,11 @@ router.get('/search', async (req, res) => {
         if (os) {
             query.os = { $regex: os, $options: 'i' };
         }
-        //validating query
-        if (!Object.keys(query).length) {
-            return res.status(400).json({ message: "No search filter provided" })
-        }
 
         await dbConnect();
-        const mobiles = await Mobile.find(query);
-        res.status(200).json(mobiles)
-        console.log(query)
+        const mobiles = await Mobile.find(query).skip(skip).limit(limit)
+        const totalItems = await Mobile.find(query).count()
+        res.status(200).json({ mobiles, totalItems })
     }
 
     catch (err) {
@@ -66,7 +61,6 @@ router.get('/search', async (req, res) => {
         res.status(500).json({ message: "Something went wrong in filtering" })
     }
 })
-
 
 
 //Get mobiles by id

@@ -1,30 +1,37 @@
-import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import { useDispatch } from "react-redux";
-import { fetchMobileFailure, fetchMobileSuccess } from "../../store/slices/mobileSlices";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMobileFailure, fetchMobileSuccess, setFilter, setPageNo, setTotalItems } from "../../store/slices/mobileSlices";
 import styled from "styled-components";
 
 const Search = () => {
 
-    const [search, setSearch] = useState("")
+    const { filter } = useSelector(state => state.mobile)
     const dispatch = useDispatch();
+
+    const search = filter.name
 
     const handleSearch = async () => {
         try {
-            // const res = await fetch(`http://localhost:3000/api/mobiles/search?name=${search}`);
-            const res = await fetch(`https://mobile-ordering.vercel.app/api/mobiles/${search ? "search?name=" + search : ""}`);
+            const res = await fetch(`http://localhost:3000/api/mobiles?${search ? "name=" + search + "&" : ""}limit=6`);
             const data = await res.json();
-            dispatch(fetchMobileSuccess(data))
+
+            dispatch(fetchMobileSuccess(data.mobiles))
+            dispatch(setTotalItems(data.totalItems));
+            dispatch(setPageNo(1))
         } catch (err) {
             console.log(err);
             dispatch(fetchMobileFailure(true))
         }
     }
 
+    const handleClick = (e) => {
+        dispatch(setFilter({ ...filter, name: e.target.value }))
+    }
+
     return (
         <Wrapper>
             <i onClick={handleSearch}><FaSearch /></i>
-            <input type="text" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={(e) => e.key === "Enter" ? handleSearch() : null} />
+            <input type="text" placeholder="Search" value={search} onChange={handleClick} onKeyDown={(e) => e.key === "Enter" ? handleSearch() : null} />
         </Wrapper>
     )
 }
